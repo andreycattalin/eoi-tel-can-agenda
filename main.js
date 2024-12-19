@@ -1,28 +1,49 @@
-function login() {
-    const email = document.getElementById("email").value;
-    const pass = document.getElementById("pass").value;
+const email = document.getElementById("email")
+const pass = document.getElementById("pass")
+const loader = document.getElementById("loader")
+setLoading(false)
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("apiKey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyaWxlb2ZkamtjbXNwdmVibnFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzk1MDYsImV4cCI6MjA0OTg1NTUwNn0.MZx5Cpcw6aqM7A9Sc8_VC6HWnSKQ0SYkWpTqUAI0-Pg");
+async function login() {
+    setLoading(true)
 
-    const raw = JSON.stringify({
-        "email": email,
-        "password": pass
+    const bodyData = JSON.stringify({
+        "email": email.value,
+        "password": pass.value
     });
 
     const requestOptions = {
         method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
+        headers: {
+            "Content-Type": "application/json",
+            "apiKey": API_KEY
+        },
+        body: bodyData
     };
 
-    fetch("https://irileofdjkcmspvebnqq.supabase.co/auth/v1/token?grant_type=password", requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-            localStorage.setItem("user", JSON.stringify(result));
+    try {
+        const response = await fetch(endpoints.login, requestOptions)
 
-        })
-        .catch((error) => console.error(error));
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+
+        if (data.access_token) {
+            localStorage.setItem(STORAGE_USER, JSON.stringify(data.user));
+        }
+
+        console.log("User logged in successfully");
+
+        setLoading(false)
+        // Redirect to app
+
+    } catch (error) {
+        setLoading(false)
+        console.error(error);
+    }
+}
+
+function setLoading(isLoading) {
+    loader.style.display = isLoading ? "block" : "none";
 }
