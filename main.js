@@ -30,7 +30,7 @@ async function login() {
         const data = await response.json();
 
         if (data.access_token) {
-            localStorage.setItem(STORAGE_USER, JSON.stringify(data.user));
+            localStorage.setItem(STORAGE_USER, JSON.stringify(data));
         }
 
         console.log("User logged in successfully");
@@ -73,7 +73,7 @@ async function register() {
         const data = await response.json();
 
         if (data.access_token) {
-            localStorage.setItem(STORAGE_USER, JSON.stringify(data.user));
+            localStorage.setItem(STORAGE_USER, JSON.stringify(data));
         }
 
         console.log("User logged in successfully");
