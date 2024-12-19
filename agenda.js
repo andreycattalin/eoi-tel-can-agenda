@@ -12,15 +12,19 @@ async function getContacts() {
 
     const userId = getUserId()
     const reqURL = `${endpoints.contacts}?user_id=eq.${userId}`
-    const response = await fetch(reqURL, requestOptions)
+    try {
+        const response = await fetch(reqURL, requestOptions)
 
-    if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+
+        console.log(data)
+    } catch (error) {
+        console.error(error);
     }
-
-    const data = await response.json();
-
-    console.log(data)
 }
 
 function getToken() {
