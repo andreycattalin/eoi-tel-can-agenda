@@ -55,8 +55,7 @@ function addDeleteListeners(contacts) {
     contacts.forEach(contact => {
         const deleteButton = document.getElementById(`delete-${contact.id}`)
         deleteButton.addEventListener("click", async () => {
-            console.log(contact)
-            deleteContact(contact.id)
+            await deleteContact(contact.id)
         })
     })
 }
@@ -64,7 +63,6 @@ function addDeleteListeners(contacts) {
 
 async function deleteContact(contactID) {
     const token = getToken()
-    const userId = getUserId()
 
     const requestOptions = {
         method: "DELETE",
