@@ -42,6 +42,7 @@ function printContacts(contacts) {
                 </div>
                 <div>
                     <button id="delete-${contact.id}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Borrar</button>
+                    <button id="edit-${contact.id}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg">Editar</button>
                 </div>
             </div>`
     });
@@ -56,6 +57,11 @@ function addDeleteListeners(contacts) {
         const deleteButton = document.getElementById(`delete-${contact.id}`)
         deleteButton.addEventListener("click", async () => {
             await deleteContact(contact.id)
+        })
+
+        const editButton = document.getElementById(`edit-${contact.id}`)
+        editButton.addEventListener("click", () => {
+            window.location.href = `/contact/?edit=${contact.id}`
         })
     })
 }
