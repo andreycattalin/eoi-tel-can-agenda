@@ -9,3 +9,14 @@ const endpoints = {
     register: `${BASE_URL_AUTH}/signup`,
     contacts: `${BASE_URL_REST}/contacts`
 }
+
+
+function getToken() {
+    const user = localStorage.getItem(STORAGE_USER)
+    return JSON.parse(user).access_token
+}
+
+function getUserId() {
+    const user = localStorage.getItem(STORAGE_USER)
+    return JSON.parse(user).user.id
+}

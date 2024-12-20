@@ -30,16 +30,6 @@ async function getContacts() {
     }
 }
 
-function getToken() {
-    const user = localStorage.getItem(STORAGE_USER)
-    return JSON.parse(user).access_token
-}
-
-function getUserId() {
-    const user = localStorage.getItem(STORAGE_USER)
-    return JSON.parse(user).user.id
-}
-
 function printContacts(contacts) {
 
     let html = ""
