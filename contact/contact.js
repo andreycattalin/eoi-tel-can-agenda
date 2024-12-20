@@ -10,6 +10,7 @@ const btnSave = document.getElementById("add-button")
 const urlParams = new URLSearchParams(window.location.search);
 const editMode = urlParams.get('edit');
 console.log(editMode)
+
 if (editMode) {
     title.innerHTML = "Editar contacto"
     btnSave.innerHTML = "Actualizar"
@@ -20,7 +21,7 @@ if (editMode) {
 
 
     // 3. Guardar los datos del contacto
-
+    // el propio boton de addContact ya hace esto
 }
 
 

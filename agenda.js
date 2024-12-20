@@ -49,10 +49,10 @@ function printContacts(contacts) {
 
     contactList.innerHTML = html
 
-    addDeleteListeners(contacts)
+    addAllListeners(contacts)
 }
 
-function addDeleteListeners(contacts) {
+function addAllListeners(contacts) {
     contacts.forEach(contact => {
         const deleteButton = document.getElementById(`delete-${contact.id}`)
         deleteButton.addEventListener("click", async () => {
