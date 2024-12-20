@@ -40,12 +40,58 @@ function printContacts(contacts) {
                     <p class="text-sm bg-blue-500 text-white w-fit px-2 py-0.5 rounded-lg">${contact.email}</p>
                     <p class="text-sm mt-2 border-t pt-2 border-dashed">${contact.phone}</p>
                 </div>
+                <div>
+                    <button id="delete-${contact.id}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Borrar</button>
+                </div>
             </div>`
     });
 
     contactList.innerHTML = html
 
+    addDeleteListeners(contacts)
 }
+
+function addDeleteListeners(contacts) {
+    contacts.forEach(contact => {
+        const deleteButton = document.getElementById(`delete-${contact.id}`)
+        deleteButton.addEventListener("click", async () => {
+            console.log(contact)
+            deleteContact(contact.id)
+        })
+    })
+}
+
+
+async function deleteContact(contactID) {
+    const token = getToken()
+    const userId = getUserId()
+
+    const requestOptions = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "apiKey": API_KEY,
+            "Authorization": `Bearer ${token}`
+        }
+    };
+
+    try {
+        const reqUrl = `${endpoints.contacts}?id=eq.${contactID}`
+        const response = await fetch(reqUrl, requestOptions)
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch data");
+        }
+
+        await getContacts()
+
+    } catch (error) {
+        setLoading(false)
+        console.error(error);
+    }
+
+}
+
 
 
 getContacts()
